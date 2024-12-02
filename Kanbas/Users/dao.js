@@ -22,9 +22,9 @@ export const findUserByUsername = (username) =>
   model.findOne({ username: username });
 
 
-export const findUserByCredentials = async (username) => {
-  console.log("Querying user by:", {username}); // Log the query
-  const user = await model.findOne({username}); // Query MongoDB
+export const findUserByCredentials = async (username, password) => {
+  console.log("Querying user by:", {username, password}); // Log the query
+  const user = await model.findOne({username, password}); // Query MongoDB
   console.log("User found:", user);
   return user;
 };
