@@ -1,13 +1,16 @@
 import model from "./model.js";
-// let { users } = db;
+export function createUsers(user) {
+  if (!user.oldId) {
+    user.oldId = `USER-${Date.now()}`; // Example: Generate unique oldId
+  }
+delete user._id;
 
-export const createUser = (user) => {
-  delete user._id
-  return model.create(user);
+return model.create(user);
 
-  // const newUser = { ...user, _id: Date.now().toString() };
-  // users = [...users, newUser];
-  // return newUser;
+}
+export const findUserByOldId = async (oldId) => {
+  console.log("Querying user with oldId:", oldId);
+  return model.findOne({ oldId: oldId }); // Query the `users` collection
 };
 
 export const findAllUsers = () => model.find();
@@ -19,8 +22,12 @@ export const findUserByUsername = (username) =>
   model.findOne({ username: username });
 
 
-export const findUserByCredentials = (username, password) =>
-  model.findOne({ username, password });
+export const findUserByCredentials = async (username) => {
+  console.log("Querying user by:", {username}); // Log the query
+  const user = await model.findOne({username}); // Query MongoDB
+  console.log("User found:", user);
+  return user;
+};
 
 // export const updateUser = (userId, updatedUserData) => {
 //   users = users.map((u) =>

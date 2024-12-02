@@ -1,43 +1,24 @@
-// import Database from "../Database/index.js";
-// export function findModulesForCourse(courseId) {
-//   const { modules } = Database;
-//   return modules.filter((module) => module.course === courseId);
-// }
-// export function createModule(module) {
-//     const newModule = { ...module, _id: Date.now().toString() };
-//     Database.modules = [...Database.modules, newModule];
-//     return newModule;
-//   }
-//   export function deleteModule(moduleId) {
-//     const { modules } = Database;
-//     Database.modules = modules.filter((module) => module._id !== moduleId);
-//    }
-//    export function updateModule(moduleId, moduleUpdates) {
-//     const { modules } = Database;
-//     const module = modules.find((module) => module._id === moduleId);
-//     Object.assign(module, moduleUpdates);
-//     return module;
-//   }
+import mongoose from "mongoose";
+import model from "./model.js"
+export function findModulesForCourse(_id) {
+    console.log("looking for modules for this course id:", _id)
+    return model.find({ course: _id });
 
-
-import Database from "../Database/index.js";
-export function findModulesForCourse(courseId) {
-  const { modules } = Database;
-  return modules.filter((module) => module.course === courseId);
 }
 export function createModule(module) {
-    const newModule = { ...module, _id: Date.now().toString() };
-    Database.modules = [...Database.modules, newModule];
-    return newModule;
+    if (!module.moduleId) {
+        module.moduleId = `module-${Date.now()}`; // Example: Generate unique courseId
+      }
+    delete module._id
+    return model.create(module);
   }
   export function deleteModule(moduleId) {
-    const { modules } = Database;
-    Database.modules = modules.filter((module) => module._id !== moduleId);
+    console.log("module id passed in dao:", moduleId)
+    return model.deleteOne({ moduleId: moduleId});
+
    }
    export function updateModule(moduleId, moduleUpdates) {
-    const { modules } = Database;
-    const module = modules.find((module) => module._id === moduleId);
-    Object.assign(module, moduleUpdates);
-    return module;
+    return model.updateOne({ _id: moduleId }, moduleUpdates);
+
   }
    

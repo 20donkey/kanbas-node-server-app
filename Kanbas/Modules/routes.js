@@ -1,12 +1,7 @@
 import * as modulesDao from "./dao.js";
+import mongoose from "mongoose";
 export default function ModuleRoutes(app) {
-    app.put("/api/modules/:moduleId", async (req, res) => {
-        const { moduleId } = req.params;
-        const moduleUpdates = req.body;
-        const status = await modulesDao.updateModule(moduleId, moduleUpdates);
-        res.send(status);
-      });
-    
+
     app.put("/api/modules/:moduleId", async (req, res) => {
         const { moduleId } = req.params;
         const moduleUpdates = req.body;
@@ -16,6 +11,7 @@ export default function ModuleRoutes(app) {
     
  app.delete("/api/modules/:moduleId", async (req, res) => {
    const { moduleId } = req.params;
+   console.log("module id for deletion is :", moduleId)
    const status = await modulesDao.deleteModule(moduleId);
    res.send(status);
  });

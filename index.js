@@ -10,9 +10,19 @@ import CourseRoutes from "./Kanbas/Courses/routes.js";
 import EnrollmentRoutes from "./Kanbas/Enrollments/routes.js";
 import AssignmentRoutes from "./Kanbas/assignments/routes.js";
 const app = express();
-const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kanbas"
+// const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING || "mongodb://127.0.0.1:27017/kanbas"
+const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING;
 
-mongoose.connect(CONNECTION_STRING);
+// const CONNECTION_STRING = "mongodb://127.0.0.1:27017/kanbas"
+
+// mongoose.connect(CONNECTION_STRING);
+mongoose.connect(CONNECTION_STRING)
+  .then(() => {
+    console.log("Connected to MongoDB Atlas");
+    console.log("Using database:", mongoose.connection.name); // Logs the database name
+  })
+  .catch((err) => console.error("Failed to connect to MongoDB:", err));
+
 
 // Middleware for CORS (allow frontend to access backend)
 app.use(
