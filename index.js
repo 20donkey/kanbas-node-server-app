@@ -29,7 +29,7 @@ app.use(
   cors({
     credentials: true, // Allow cookies and session sharing
     origin: [ "http://localhost:3000",// Local development origin
-    "https://kanbas-react-web-app-nian.netlify.app"], // Deployed frontend origin, // Frontend origin
+        "https://kanbas-react-web-a6.netlify.app"], // Deployed frontend origin, // Frontend origin
   })
 );
 
