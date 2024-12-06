@@ -130,7 +130,17 @@ export default function UserRoutes(app) {
       }
     });
   };
-  
+   const signup = (req, res) => {
+    const user = dao.findUserByUsername(req.body.username);
+    if (user) {
+      res.status(400).json(
+        { message: "Username already in use" });
+      return;
+    }
+    currentUser = dao.createUser(req.body);
+    res.json(currentUser);
+  };
+
 
   const signin = (req, res) => {
     const { username, password } = req.body;
@@ -141,6 +151,7 @@ export default function UserRoutes(app) {
     currentUser = user; // Set current session user
     res.json(currentUser); // Respond with the signed-in user's data
   };
+  app.post("/api/users/signup", signup);
 
   app.put("/api/users/:userId", updateUser);
   app.post("/api/users/profile", profile);
